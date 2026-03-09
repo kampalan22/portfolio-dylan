@@ -127,13 +127,6 @@ export default function Projects() {
                       <Github size={18} />
                       <span>GitHub</span>
                     </a>
-                    <a
-                      href={project.demo}
-                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
-                    >
-                      <ExternalLink size={18} />
-                      <span>Live Demo</span>
-                    </a>
                   </div>
                 </div>
               </div>

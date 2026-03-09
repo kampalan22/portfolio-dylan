@@ -25,8 +25,8 @@ export default function Hero() {
     document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleDownloadResume = () => {
-    alert('Resume download would be triggered here. Connect your actual resume file.');
+  const handleViewResume = () => {
+    window.open('/resume.pdf', '_blank');
   };
 
   return (
@@ -43,7 +43,7 @@ export default function Hero() {
               Computer Science Student @ Eastern Michigan University
             </p>
             <p className="text-lg sm:text-xl md:text-2xl text-blue-600 font-semibold mt-3">
-              Full-Stack & AI Engineering
+              Full-Stack & AI Engineer
             </p>
           </div>
 
@@ -55,10 +55,10 @@ export default function Hero() {
               View Projects
             </button>
             <button
-              onClick={handleDownloadResume}
+              onClick={handleViewResume}
               className="px-8 py-4 bg-white text-blue-600 border-2 border-blue-600 rounded-lg font-semibold text-lg hover:bg-blue-50 transform hover:scale-105 transition-all shadow-lg hover:shadow-xl"
             >
-              Download Resume
+              View Resume
             </button>
           </div>
 
