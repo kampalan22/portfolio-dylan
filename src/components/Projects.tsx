@@ -1,4 +1,4 @@
-import { ExternalLink, Github } from 'lucide-react';
+import { Github } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 export default function Projects() {

@@ -1,9 +1,9 @@
-export async function onRequestPost(context) {
+export async function onRequestPost(context: any) {
   try {
     // context.request contains the incoming Request
     // context.env contains your environment variables
     const { request, env } = context;
-    const body = await request.json();
+    const body = (await request.json()) as any;
     const { name, email, message } = body;
 
     // Validate input
@@ -50,7 +50,8 @@ export async function onRequestPost(context) {
     });
 
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    return new Response(JSON.stringify({ error: errorMessage }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
