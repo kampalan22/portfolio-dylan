@@ -1,6 +1,6 @@
 {
   "$schema": "https://wrangler.cloudflare.workers.dev/config-schema.json",
-  "name": "portfolio-dylan",
+  "name": "portfolio-dylan1",
   "type": "javascript",
   "compatibility_date": "2024-09-27",
   "env": {
