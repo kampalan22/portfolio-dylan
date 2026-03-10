@@ -1,5 +1,3 @@
-import { Resend } from 'resend';
-
 export async function onRequestPost(context: any) {
   try {
     const { request, env } = context;
@@ -14,31 +12,45 @@ export async function onRequestPost(context: any) {
       });
     }
 
-    // Initialize Resend with API key from environment
-    const resend = new Resend(env.RESEND_API_KEY);
-
-    // Send email using Resend SDK
-    const result = await resend.emails.send({
-      from: 'contact@ssengendo.com',
-      to: 'contact@ssengendo.com',
-      replyTo: email,
-      subject: `New Contact Form Submission from ${name}`,
-      html: `
-        <h2>New Message from ${name}</h2>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, '<br>')}</p>
-      `
-    });
-
-    if (result.error) {
-      return new Response(JSON.stringify({ error: result.error }), {
-        status: 400,
+    // Check if API key exists
+    if (!env.RESEND_API_KEY) {
+      return new Response(JSON.stringify({ error: 'API key not configured' }), {
+        status: 500,
         headers: { 'Content-Type': 'application/json' }
       });
     }
 
-    return new Response(JSON.stringify({ success: true, data: result.data }), {
+    // Make direct HTTP call to Resend API
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`
+      },
+      body: JSON.stringify({
+        from: 'contact@ssengendo.com',
+        to: 'contact@ssengendo.com',
+        reply_to: email,
+        subject: `New Contact Form Submission from ${name}`,
+        html: `
+          <h2>New Message from ${name}</h2>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Message:</strong></p>
+          <p>${message.replace(/\n/g, '<br>')}</p>
+        `
+      })
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      return new Response(JSON.stringify({ error: result }), {
+        status: response.status,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    return new Response(JSON.stringify({ success: true, data: result }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });

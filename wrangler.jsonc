@@ -1,13 +1,13 @@
 {
-  "$schema": "https://wrangler.cloudflare.workers.dev/config-schema.json",
   "name": "portfolio-dylan1",
   "type": "javascript",
   "compatibility_date": "2024-09-27",
-  "env": {
-    "production": {
-      "vars": {
-        "RESEND_API_KEY": "re_NfYbmFCr_DLd5fHF88gAWZ4oRV58aB1UY"
-      }
-    }
+  "build": {
+    "command": "npm run build",
+    "cwd": "./",
+    "root": "."
+  },
+  "assets": {
+    "directory": "./dist"
   }
 }
