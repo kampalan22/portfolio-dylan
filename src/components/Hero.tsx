@@ -56,7 +56,8 @@ export default function Hero() {
             </button>
             <button
               onClick={handleViewResume}
-              className="px-8 py-4 bg-white text-blue-600 border-2 border-blue-600 rounded-lg font-semibold text-lg hover:bg-blue-50 transform hover:scale-105 transition-all shadow-lg hover:shadow-xl"
+              disabled
+              className="px-8 py-4 bg-white text-blue-600 border-2 border-blue-600 rounded-lg font-semibold text-lg hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 transition-all shadow-lg hover:shadow-xl"
             >
               View Resume
             </button>
