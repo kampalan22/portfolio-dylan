@@ -3,7 +3,7 @@ import { ChevronDown } from 'lucide-react';
 
 export default function Hero() {
   const [displayText, setDisplayText] = useState('');
-  const fullText = "Hi, I'm Anthony.";
+  const fullText = "Hi, I'm Anthony Ssengendo.";
   const [isTypingComplete, setIsTypingComplete] = useState(false);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function Hero() {
 
           <div className={`transition-opacity duration-500 ${isTypingComplete ? 'opacity-100' : 'opacity-0'}`}>
             <p className="text-xl sm:text-2xl md:text-3xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
-              Computer Science Student @ Eastern Michigan University
+              Computer Science Student
             </p>
             <p className="text-lg sm:text-xl md:text-2xl text-blue-600 font-semibold mt-3">
               Full-Stack & AI Engineer
