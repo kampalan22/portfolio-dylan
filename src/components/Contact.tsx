@@ -1,12 +1,8 @@
-import { Github, Linkedin, Mail, Send } from 'lucide-react';
+import { Github, Linkedin, Mail, Instagram } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 export default function Contact() {
   const [isVisible, setIsVisible] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [focusedField, setFocusedField] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -26,148 +22,12 @@ export default function Contact() {
     return () => observer.disconnect();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setSubmitStatus('idle');
-
-    try {
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        setFormData({ name: '', email: '', message: '' });
-        setTimeout(() => setSubmitStatus('idle'), 3000);
-      } else {
-        setSubmitStatus('error');
-        console.error('Error:', data.error);
-      }
-    } catch (error) {
-      setSubmitStatus('error');
-      console.error('Error sending email:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const isFieldFilled = (field: keyof typeof formData) => formData[field].length > 0;
-
   return (
     <section id="contact" ref={sectionRef} className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Get In Touch
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Let's collaborate on something amazing
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div className={`transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="relative">
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  onFocus={() => setFocusedField('name')}
-                  onBlur={() => setFocusedField(null)}
-                  required
-                  className="w-full px-4 py-4 bg-gray-50 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600 transition-colors peer"
-                />
-                <label
-                  className={`absolute left-4 transition-all duration-200 pointer-events-none ${
-                    focusedField === 'name' || isFieldFilled('name')
-                      ? 'text-xs -top-2 bg-white px-2 text-blue-600'
-                      : 'text-gray-500 top-4'
-                  }`}
-                >
-                  Your Name
-                </label>
-              </div>
-
-              <div className="relative">
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  onFocus={() => setFocusedField('email')}
-                  onBlur={() => setFocusedField(null)}
-                  required
-                  className="w-full px-4 py-4 bg-gray-50 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600 transition-colors peer"
-                />
-                <label
-                  className={`absolute left-4 transition-all duration-200 pointer-events-none ${
-                    focusedField === 'email' || isFieldFilled('email')
-                      ? 'text-xs -top-2 bg-white px-2 text-blue-600'
-                      : 'text-gray-500 top-4'
-                  }`}
-                >
-                  Your Email
-                </label>
-              </div>
-
-              <div className="relative">
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  onFocus={() => setFocusedField('message')}
-                  onBlur={() => setFocusedField(null)}
-                  required
-                  rows={6}
-                  className="w-full px-4 py-4 bg-gray-50 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-600 transition-colors resize-none peer"
-                />
-                <label
-                  className={`absolute left-4 transition-all duration-200 pointer-events-none ${
-                    focusedField === 'message' || isFieldFilled('message')
-                      ? 'text-xs -top-2 bg-white px-2 text-blue-600'
-                      : 'text-gray-500 top-4'
-                  }`}
-                >
-                  Your Message
-                </label>
-              </div>
-
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full px-6 py-4 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transform hover:scale-105 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
-              >
-                <span>{isLoading ? 'Sending...' : 'Send Message'}</span>
-                <Send size={20} />
-              </button>
-
-              {submitStatus === 'success' && (
-                <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 text-center font-semibold">
-                  Message sent successfully! I'll get back to you soon.
-                </div>
-              )}
-              {submitStatus === 'error' && (
-                <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-800 text-center font-semibold">
-                  Error sending message. Please try again.
-                </div>
-              )}
-            </form>
-          </div>
-
-          <div className={`flex flex-col justify-center transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+        <div className="flex justify-center w-full">
+          {/* Form Removed Temporarily */}
+          <div className={`flex flex-col items-center max-w-2xl text-center transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="space-y-8">
               <div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Connect with me</h3>
@@ -177,21 +37,6 @@ export default function Contact() {
               </div>
 
               <div className="space-y-4">
-                <a
-                  href="https://github.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
-                >
-                  <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Github className="text-white" size={24} />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">GitHub</h4>
-                    <p className="text-gray-600 text-sm">Check out my repositories</p>
-                  </div>
-                </a>
-
                 <a
                   href="https://www.linkedin.com/in/anthony-ssengendo-290391347/"
                   target="_blank"
@@ -208,7 +53,7 @@ export default function Contact() {
                 </a>
 
                 <a
-                  href="mailto:anthony@example.com"
+                  href="mailto:dylan@ssengendo.com"
                   className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
                 >
                   <div className="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -217,6 +62,36 @@ export default function Contact() {
                   <div>
                     <h4 className="font-semibold text-gray-900">Email</h4>
                     <p className="text-gray-600 text-sm">dylan@ssengendo.com</p>
+                  </div>
+                </a>
+
+                <a
+                  href="https://github.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
+                >
+                  <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Github className="text-white" size={24} />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900">GitHub</h4>
+                    <p className="text-gray-600 text-sm">Check out my repositories</p>
+                  </div>
+                </a>
+
+                <a
+                  href="https://www.instagram.com/dylan.rb_/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
+                >
+                  <div className="w-12 h-12 bg-pink-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Instagram className="text-white" size={24} />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900">Instagram</h4>
+                    <p className="text-gray-600 text-sm">Follow me on Instagram</p>
                   </div>
                 </a>
               </div>

@@ -1,4 +1,4 @@
-import { Github } from 'lucide-react';
+import { Lock } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 export default function Projects() {
@@ -121,11 +121,11 @@ export default function Projects() {
 
                   <div className="flex gap-4 mt-6">
                     <a
-                      href={project.github}
-                      className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors font-medium"
+                      href="#contact"
+                      className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors font-medium text-sm md:text-base group-hover:bg-white group-hover:text-gray-900"
                     >
-                      <Github size={18} />
-                      <span>GitHub</span>
+                      <Lock size={18} className="flex-shrink-0" />
+                      <span>Closed Source • Contact for Access</span>
                     </a>
                   </div>
                 </div>
