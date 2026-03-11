@@ -1,4 +1,4 @@
-import { Brain, Code, Shield, Database, Cpu, Award, Users } from 'lucide-react';
+import { Brain, Code, Shield, Database, Cpu, Award, Users, Coffee, Binary } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 export default function Skills() {
@@ -40,6 +40,18 @@ export default function Skills() {
       title: 'React',
       description: 'Modern web applications with React and TypeScript',
       color: 'from-cyan-500 to-blue-500',
+    },
+    {
+      icon: Coffee,
+      title: 'Java',
+      description: 'Object-oriented programming, enterprise applications, and APIs',
+      color: 'from-red-500 to-orange-500',
+    },
+    {
+      icon: Binary,
+      title: 'Data Structures & Algorithms',
+      description: 'Optimizing code complexity, algorithm design, and problem solving',
+      color: 'from-purple-500 to-indigo-500',
     },
     {
       icon: Shield,
@@ -92,18 +104,33 @@ export default function Skills() {
           <div className="relative p-8 rounded-2xl bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 overflow-hidden group hover:shadow-2xl transition-all duration-300">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-transparent animate-pulse"></div>
             <div className="relative z-10">
-              <div className="flex items-center gap-4 mb-4">
+              <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <Award className="text-white" size={32} />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-white">AI Engineer</h3>
-                  <p className="text-blue-100">for Developers Associate</p>
+                  <h3 className="text-2xl font-bold text-white">DataCamp Certifications</h3>
+                  <p className="text-blue-100">AI & Python</p>
                 </div>
               </div>
-              <p className="text-blue-50 leading-relaxed">
-                Certified in building and deploying AI-powered applications with modern frameworks and best practices.
-              </p>
+              <ul className="space-y-4 text-blue-50">
+                <li className="flex items-center justify-between border-b border-blue-500/30 pb-3">
+                  <span className="font-medium">Introduction to LLMs in Python</span>
+                  <span className="text-xs font-semibold bg-blue-500/40 px-3 py-1 rounded-full whitespace-nowrap ml-4">Intermediate</span>
+                </li>
+                <li className="flex items-center justify-between border-b border-blue-500/30 pb-3">
+                  <span className="font-medium">AI Assisted Coding for Developers</span>
+                  <span className="text-xs font-semibold bg-blue-500/40 px-3 py-1 rounded-full whitespace-nowrap ml-4">Intermediate</span>
+                </li>
+                <li className="flex items-center justify-between border-b border-blue-500/30 pb-3">
+                  <span className="font-medium">Working with OpenAI API</span>
+                  <span className="text-xs font-semibold bg-blue-500/40 px-3 py-1 rounded-full whitespace-nowrap ml-4">Basic</span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="font-medium">Multi-Agent Systems with LangGraph</span>
+                  <span className="text-xs font-semibold bg-blue-500/40 px-3 py-1 rounded-full whitespace-nowrap ml-4">Advanced</span>
+                </li>
+              </ul>
             </div>
           </div>
 
